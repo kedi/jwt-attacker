@@ -6,6 +6,7 @@ This module provides the command-line interface for the JWT Attacker Tool.
 
 import argparse
 import sys
+import json
 from pathlib import Path
 from rich.console import Console
 from rich.panel import Panel
@@ -18,6 +19,14 @@ from .alg_none import create_alg_none_jwt
 from .utils import pretty_print_jwt
 
 console = Console()
+
+def validate_json_payload(payload: str) -> bool:
+    """Validate if the payload is valid JSON."""
+    try:
+        json.loads(payload)
+        return True
+    except json.JSONDecodeError:
+        return False
 
 def print_banner():
     """Print the tool banner."""
@@ -56,6 +65,13 @@ def cmd_forge(args):
     console.print(f"[dim]Secret: {args.secret}[/dim]")
     console.print()
     
+    # Validate JSON payload
+    if not validate_json_payload(args.payload):
+        console.print(f"[bold red]❌ Invalid JSON payload![/bold red]")
+        console.print(f"[yellow]💡 Tip: Use double quotes for JSON keys and values[/yellow]")
+        console.print(f"[yellow]💡 PowerShell example: --payload '{{\"user\":\"admin\"}}' [/yellow]")
+        return
+    
     result = forge_jwt(args.payload, args.secret, args.algorithm)
     
     if result:
@@ -73,6 +89,13 @@ def cmd_alg_none(args):
     console.print(f"[bold blue]🚫 Creating alg:none JWT Token...[/bold blue]")
     console.print(f"[dim]Payload: {args.payload}[/dim]")
     console.print()
+    
+    # Validate JSON payload
+    if not validate_json_payload(args.payload):
+        console.print(f"[bold red]❌ Invalid JSON payload![/bold red]")
+        console.print(f"[yellow]💡 Tip: Use double quotes for JSON keys and values[/yellow]")
+        console.print(f"[yellow]💡 PowerShell example: --payload '{{\"user\":\"admin\",\"role\":\"administrator\"}}' [/yellow]")
+        return
     
     result = create_alg_none_jwt(args.payload)
     
@@ -96,6 +119,11 @@ Examples:
   %(prog)s crack --token "eyJ0eXAiOi..." --wordlist wordlist.txt
   %(prog)s forge --payload '{"user":"admin"}' --secret "mysecret"
   %(prog)s alg-none --payload '{"user":"admin"}'
+  
+Windows PowerShell Examples:
+  %(prog)s crack --token "eyJ0eXAiOi..." --wordlist wordlist.txt
+  %(prog)s forge --payload '{\"user\":\"admin\"}' --secret "mysecret"
+  %(prog)s alg-none --payload '{\"user\":\"admin\",\"role\":\"administrator\"}'
         """
     )
     
