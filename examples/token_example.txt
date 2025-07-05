@@ -1,0 +1,31 @@
+# JWT Token Examples for Testing
+
+# Example 1: Simple HS256 token with weak secret "secret"
+# Header: {"alg": "HS256", "typ": "JWT"}
+# Payload: {"user": "admin", "role": "administrator"}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW5pc3RyYXRvciJ9.tyh-VfuzAcPEBbxfwjzPGYGGCvgZcJN2XCxmAcHGaU8
+
+# Example 2: HS256 token with weak secret "password"
+# Header: {"alg": "HS256", "typ": "JWT"}
+# Payload: {"user": "testuser", "admin": true}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoidGVzdHVzZXIiLCJhZG1pbiI6dHJ1ZX0.B_a1dJjBZJNPOYi2oJWKoTWfLJKN7NQLdqPGqxEGzSg
+
+# Example 3: HS256 token with weak secret "123456"
+# Header: {"alg": "HS256", "typ": "JWT"}
+# Payload: {"sub": "user123", "name": "John Doe", "iat": 1516239022}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+# Example 4: alg:none token (no signature)
+# Header: {"alg": "none", "typ": "JWT"}
+# Payload: {"user": "hacker", "role": "admin"}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJ1c2VyIjoiaGFja2VyIiwicm9sZSI6ImFkbWluIn0.
+
+# Example 5: HS256 token with weak secret "admin"
+# Header: {"alg": "HS256", "typ": "JWT"}
+# Payload: {"user": "admin", "permissions": ["read", "write", "delete"]}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYWRtaW4iLCJwZXJtaXNzaW9ucyI6WyJyZWFkIiwid3JpdGUiLCJkZWxldGUiXX0.mKhKVBODmMW8lNyWZXQYpKw6VPM5pQkqIxYGtTgHGkI
+
+# Example 6: HS256 token with weak secret "letmein"
+# Header: {"alg": "HS256", "typ": "JWT"}
+# Payload: {"user": "guest", "role": "user", "exp": 1735689600}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZ3Vlc3QiLCJyb2xlIjoidXNlciIsImV4cCI6MTczNTY4OTYwMH0.gBZQoFtCCfYCVmjXXjPp_L6xnPpZCx7UDNLIWwzWXlE
